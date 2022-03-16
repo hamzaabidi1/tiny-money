@@ -9,8 +9,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Account;
 import tn.esprit.spring.entities.Transaction;
 import tn.esprit.spring.entities.Repository.TransactionRepository;
+import tn.esprit.spring.Services.Interfaces.AccountServices;
 import tn.esprit.spring.Services.Interfaces.TransactionServices;
 
 
@@ -21,6 +23,8 @@ public class TransactionServicesImpl implements TransactionServices{
 	TransactionRepository TransactionRep;
 	@Autowired
     public JavaMailSender emailSender;
+	@Autowired
+	AccountServices accountService;
 	
 	@Override
 	public List<Transaction> retrieveAllTransaction() {
@@ -32,40 +36,33 @@ public class TransactionServicesImpl implements TransactionServices{
 
 	@Override
 	public Transaction addTransaction(Transaction t) {
-		// TODO Auto-generated method stub
-		
-		Transaction tr = TransactionRep.save(t);
 		if (t.getAmountTransaction()>100)
 		{
 			  SimpleMailMessage message = new SimpleMailMessage();
-		        
 		        message.setTo(t.getAccount().getUser().getEmail());
 		        message.setSubject("Transaction");
 		        message.setText("your transaction amount is"+t.getAmountTransaction());
 		        this.emailSender.send(message);
 		}
-			
+		Transaction tr = TransactionRep.save(t);
+        t.getAccount().setTotalAccount(t.getAccount().getTotalAccount()-3+t.getAmountTransaction());
+		accountService.updateAccount(t.getAccount());
 		return tr;
 	}
 
 	@Override
 	public void deleteTransaction(Long id) {
-		// TODO Auto-generated method stub
 		TransactionRep.deleteById(id);
 	}
 
 	@Override
-	public Transaction updateTransaction(Transaction t) {
-		// TODO Auto-generated method stub
-		
+	public Transaction updateTransaction(Transaction t) {		
 		Transaction tr = TransactionRep.save(t);
 		return tr;
 	}
 
 	@Override
 	public Transaction retrieveTransaction(Long id) {
-		// TODO Auto-generated method stub
-		
 		//on utilise .get() pour avoir un resultat  de type object (option les attribut ne seuron pas afficher)
 		return (Transaction) TransactionRep.findById(id).get();
 	}

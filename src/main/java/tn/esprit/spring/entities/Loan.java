@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,8 +37,8 @@ public class Loan implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TypeLoan TypeLoan;
 	
-	@ManyToMany(mappedBy="loan")
-	private Set<Account>account;
+	@ManyToOne
+	private Account account;
 	
 	@OneToOne
 	private Insurance insurance;
@@ -112,6 +113,18 @@ public class Loan implements Serializable {
 	public void setTypeLoan(TypeLoan typeLoan) {
 		TypeLoan = typeLoan;
 	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	
+	
+	
 	
 	
 	

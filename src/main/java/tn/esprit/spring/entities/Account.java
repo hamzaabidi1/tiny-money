@@ -36,11 +36,12 @@ public class Account implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date DateCreation;
 	private float TotalAccount;
+	private Date dateLastFinancialInterest =DateCreation;
 	
 	@OneToOne
 	private User user;
 	
-	@ManyToMany
+	@OneToMany(mappedBy="account")
 	private Set<Loan>loan;
 	
 	@OneToMany(mappedBy="account")
@@ -57,6 +58,22 @@ public class Account implements Serializable{
 	}
 	public Account() {
 	
+	}
+	
+	public Account(long idAccount, tn.esprit.spring.entities.TypeAccount typeAccount, long cIN, long rIB,
+			Date dateCreation, float totalAccount, Date dateLastFinancialInterest, User user, Set<Loan> loan,
+			Set<Transaction> transaction) {
+		super();
+		this.idAccount = idAccount;
+		TypeAccount = typeAccount;
+		CIN = cIN;
+		RIB = rIB;
+		DateCreation = dateCreation;
+		TotalAccount = totalAccount;
+		this.dateLastFinancialInterest = dateLastFinancialInterest;
+		this.user = user;
+		this.loan = loan;
+		this.transaction = transaction;
 	}
 	public long getIdAccount() {
 		return idAccount;
@@ -100,6 +117,20 @@ public class Account implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	public Set<Loan> getLoan() {
+		return loan;
+	}
+	public void setLoan(Set<Loan> loan) {
+		this.loan = loan;
+	}
+	public Date getDateLastFinancialInterest() {
+		return dateLastFinancialInterest;
+	}
+	public void setDateLastFinancialInterest(Date dateLastFinancialInterest) {
+		this.dateLastFinancialInterest = dateLastFinancialInterest;
+	}
+	
+	
 
 	
 	
