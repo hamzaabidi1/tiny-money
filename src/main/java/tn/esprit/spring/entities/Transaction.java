@@ -24,10 +24,7 @@ public class Transaction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id	
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	
-	
 	private long idTransaction;
-	
 	@Enumerated(EnumType.STRING)
 	private TypeTransaction TypeTransaction;
 	@Enumerated(EnumType.STRING)
@@ -35,10 +32,9 @@ public class Transaction implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date DateTransaction;
 	private float AmountTransaction;
-	
 	@ManyToOne
 	private Account account;
-	
+	private Account accountdestinataire;
 	
 	public Transaction(TypeTransaction typeTransaction,
 			TransactionNature transactionNature, Date dateTransaction,
@@ -88,6 +84,13 @@ public class Transaction implements Serializable{
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+	public Account getAccountdestinataire() {
+		return accountdestinataire;
+	}
+	public void setAccountdestinataire(Account accountdestinataire) {
+		this.accountdestinataire = accountdestinataire;
+	}
+	
 	
 	
 	

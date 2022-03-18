@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Account;
 import tn.esprit.spring.entities.Transaction;
+import tn.esprit.spring.entities.TransactionNature;
+import tn.esprit.spring.entities.TypeTransaction;
+import tn.esprit.spring.entities.Repository.AccountRepository;
 import tn.esprit.spring.entities.Repository.TransactionRepository;
 import tn.esprit.spring.Services.Interfaces.AccountServices;
 import tn.esprit.spring.Services.Interfaces.TransactionServices;
@@ -24,11 +27,10 @@ public class TransactionServicesImpl implements TransactionServices{
 	@Autowired
     public JavaMailSender emailSender;
 	@Autowired
-	AccountServices accountService;
+	AccountRepository accountRepository;
 	
 	@Override
 	public List<Transaction> retrieveAllTransaction() {
-		// TODO Auto-generated method stub
 		List<Transaction> transactions = (TransactionRep.findAll());
 				//elle va retourner un objet iterable alors il faut faire le cast avec (List<Transaction>)
 		return transactions;
@@ -46,12 +48,12 @@ public class TransactionServicesImpl implements TransactionServices{
 		}
 		Transaction tr = TransactionRep.save(t);
         t.getAccount().setTotalAccount(t.getAccount().getTotalAccount()-3+t.getAmountTransaction());
-		accountService.updateAccount(t.getAccount());
+        accountRepository.save(t.getAccount());
 		return tr;
 	}
 
 	@Override
-	public void deleteTransaction(Long id) {
+	public void deleteTransaction(int id) {
 		TransactionRep.deleteById(id);
 	}
 
@@ -62,9 +64,8 @@ public class TransactionServicesImpl implements TransactionServices{
 	}
 
 	@Override
-	public Transaction retrieveTransaction(Long id) {
-		//on utilise .get() pour avoir un resultat  de type object (option les attribut ne seuron pas afficher)
-		return (Transaction) TransactionRep.findById(id).get();
+	public Transaction retrieveTransaction(int id) {
+				return (Transaction) TransactionRep.findById(id).get();
 	}
 
 	@Override
@@ -82,16 +83,59 @@ public class TransactionServicesImpl implements TransactionServices{
 	}
 
 	@Override
+	public void heighestClient() {
+		List<String> emails =accountRepository.findAllAccountHight();
+		for (int i=0;i<emails.size();i++) {
+			 SimpleMailMessage message = new SimpleMailMessage();
+		        message.setTo(emails.get(i));
+		        message.setSubject("Offer for You ");
+		        message.setText("you are one of our best client More benifits for You");
+		        this.emailSender.send(message);
+		}
+		
+	}
+
+	@Override
+	public void mediumClient() {
+		List<String> emails =accountRepository.findAllAccountMedium();
+		for (int i=0;i<emails.size();i++) {
+			 SimpleMailMessage message = new SimpleMailMessage();
+		        message.setTo(emails.get(i));
+		        message.setSubject("Offer for You ");
+		        message.setText("you can have More benifits for You");
+		        this.emailSender.send(message);
+		}
+		
+		
+	}
+
+	@Override
+	public void lowClient() {
+		List<String> emails =accountRepository.findAllAccountLow();
+		for (int i=0;i<emails.size();i++) {
+			 SimpleMailMessage message = new SimpleMailMessage();
+		        message.setTo(emails.get(i));
+		        message.setSubject("Offer for You ");
+		        message.setText("our good client why you are absent ");
+		        this.emailSender.send(message);
+		}
+		
+		
+	}
+	
+	
+
+	@Override
 	public List<Transaction> retrieveAllTransactionByType(String type) {
 		List<Transaction> transactions = new ArrayList<Transaction>();
-		transactions = TransactionRep.findAllByTypeTransactionLike(type);
+		transactions = TransactionRep.findAllByTypeTransaction(type);
 		return transactions;
 	}
 
 	@Override
 	public List<Transaction> retrieveAllTransactionByNature(String nature) {
 		List<Transaction> transactions = new ArrayList<Transaction>();
-		transactions = TransactionRep.findAllByTransactionNatureLike(nature);
+		transactions = TransactionRep.findAllByTransactionNature(nature);
 		return transactions;
 	}
 

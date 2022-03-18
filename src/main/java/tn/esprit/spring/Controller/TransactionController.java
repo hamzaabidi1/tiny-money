@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.esprit.spring.entities.Transaction;
-import tn.esprit.spring.Services.Implementation.TransactionServicesImpl;
+import tn.esprit.spring.entities.TransactionNature;
+import tn.esprit.spring.entities.TypeTransaction;
+import tn.esprit.spring.Services.Interfaces.TransactionServices;
 
 @RestController
 public class TransactionController {
 	
 
 	@Autowired
-	private TransactionServicesImpl tsi ;
+	private TransactionServices tsi ;
 	
 	@GetMapping("getAllTransaction")
 	public List<Transaction>getAllTransactions(){
@@ -37,12 +39,12 @@ public class TransactionController {
 		return tr;
 	}
 	@DeleteMapping("/deletetransaction/{idTrans}")
-	public void deletetransaction(@PathVariable("idTrans")Long idTrans){
+	public void deletetransaction(@PathVariable("idTrans")int idTrans){
 		tsi.deleteTransaction(idTrans);
 		
 	}
 	@GetMapping("gettransaction/{idTrans}")
-	public Transaction gettransactionbyid (@PathVariable("idTrans")Long idTrans){
+	public Transaction gettransactionbyid (@PathVariable("idTrans")int idTrans){
 		return tsi.retrieveTransaction(idTrans);
 	}
 	

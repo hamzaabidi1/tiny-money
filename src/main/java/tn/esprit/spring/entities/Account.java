@@ -20,8 +20,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 @Entity
-
-
 public class Account implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id	
@@ -40,7 +38,6 @@ public class Account implements Serializable{
 	
 	@OneToOne
 	private User user;
-	
 	@OneToMany(mappedBy="account")
 	private Set<Loan>loan;
 	

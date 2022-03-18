@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,9 +23,8 @@ public class Product implements Serializable {
 	private String descriptionproduct;
 	@Temporal(TemporalType.DATE)
 	private Date dateproduct;
-	
-	@ManyToMany(mappedBy="product")
-	private Set<User>user;
+	@ManyToOne
+	private User user;
 	
 	public long getIdproduct() {
 		return idproduct;
@@ -52,6 +52,13 @@ public class Product implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Product(String nomproduct, String descriptionproduct, Date dateproduct) {
 		super();

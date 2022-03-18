@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -33,10 +34,10 @@ private String address;
 	private String picture;
 	private long numtel;
 	@OneToOne
-	private Set<Account>account;	
+	private Account account;	
 	@ManyToMany
 	private Set<Complaint>complaint;	
-	@ManyToMany
+	@OneToMany(mappedBy="user")
 	private Set<Product>product;
 	@ManyToMany
 	private Set<Agency>agency;
@@ -46,7 +47,7 @@ private String address;
 
 	public User(String firstName, String lastName, String password, String address,
 			tn.esprit.spring.entities.UserRole userRole, String email, String job, String picture, long numtel,
-			Set<Account> account, Set<Complaint> complaint, Set<Product> product, Set<Agency> agency) {
+			Account account, Set<Complaint> complaint, Set<Product> product, Set<Agency> agency) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -161,12 +162,20 @@ private String address;
 		this.numtel = numtel;
 	}
 
-	public Set<Account> getAccount() {
+	public Account getAccount() {
 		return account;
 	}
 
-	public void setAccount(Set<Account> account) {
+	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public Set<Product> getProduct() {
+		return product;
+	}
+
+	public void setProduct(Set<Product> product) {
+		this.product = product;
 	}
 
 	public Set<Complaint> getComplaint() {
