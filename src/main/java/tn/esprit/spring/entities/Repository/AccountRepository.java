@@ -13,17 +13,20 @@ import tn.esprit.spring.entities.Transaction;
 @Repository
 
 public interface AccountRepository extends JpaRepository<Account, Long>{
-	@Query(value="select u.email from user u join account a join transaction t \r\n"
+	@Query(value="select u.email from user u join account a on u.id_user=a.user_id_user\r\n"
+			+ "join transaction t on a.id_account=t.account_id_account \r\n"
 			+ "where t.amount_transaction > 100000 and t.date_transaction >=\r\n"
 			+ "last_day(now()) + interval 1 day - interval 3 month \r\n"
 			+ "having count(*)>3", nativeQuery = true)
 	List<String> findAllAccountHight();
-	@Query(value="select u.email from user u join account a join transaction t \r\n"
+	@Query(value="select u.email from user u join account a on u.id_user=a.user_id_user\r\n"
+			+ "join transaction t on a.id_account=t.account_id_account \r\n"
 			+ "where t.amount_transaction < 100000 and t.date_transaction >= \r\n"
 			+ "last_day(now()) + interval 1 day - interval 3 month having\r\n"
-			+ "count(*)>5", nativeQuery = true)
+			+ " count(*)>5", nativeQuery = true)
 	List<String> findAllAccountMedium();
-	@Query(value="select u.email from user u join account a join transaction t \r\n"
+	@Query(value="select u.email from user u join account a on u.id_user=a.user_id_user\r\n"
+			+ "join transaction t on a.id_account=t.account_id_account \r\n"
 			+ "where t.date_transaction >= last_day(now()) + interval 1 day - \r\n"
 			+ "interval 12 month having\r\n"
 			+ "count(*) < 1", nativeQuery = true)
