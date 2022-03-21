@@ -3,6 +3,8 @@ package tn.esprit.spring.Services.Implementation;
 import java.util.Calendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import tn.esprit.spring.entities.Repository.AccountRepository;
 
 @Service
 public class AccountServicesImpl {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountServicesImpl.class);
+
 
 
 
@@ -21,6 +25,7 @@ public class AccountServicesImpl {
 
 	
 		public List<Account> retrieveAllAccounts() {
+			LOGGER.info("IN retrieve all Accounts ");
 			List<Account> accounts=(List<Account>) (accountrep.findAll());
 		
 			return accounts;
@@ -28,6 +33,7 @@ public class AccountServicesImpl {
 
 	
 		public Account addAccount(Account account) {
+			LOGGER.info("IN add Account ");
 			accountrep.save(account);
 			return account;
 	
@@ -36,6 +42,7 @@ public class AccountServicesImpl {
 
 
 		public void deleteAccount(Long id) {
+			LOGGER.info("IN delete Account ");
 			accountrep.deleteById(id);
 	
 			
@@ -43,7 +50,7 @@ public class AccountServicesImpl {
 
 		
 		public Account updateUser(Account account) {
-	
+			LOGGER.info("IN update Account ");
 			accountrep.save(account);
 			return account;
 		}
@@ -51,11 +58,12 @@ public class AccountServicesImpl {
 		
 		public Account retrieveAccount(Long id) {
 			
-	
+			LOGGER.info("IN retrieve Account ");
 			return accountrep.findById(id).get();
 		}
 		
 		public void AddFinancialInterest() {
+			LOGGER.info("IN add financial interest of Accounts ");
 			List<Account> accounts = accountrep.findAll();
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, -365);
