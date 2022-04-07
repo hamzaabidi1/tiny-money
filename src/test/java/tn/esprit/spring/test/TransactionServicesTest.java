@@ -25,6 +25,7 @@ public class TransactionServicesTest {
 	TransactionServices transactionServices;
 	Transaction transaction;
 	//please complete data for testing
+	//please fill constructors of envoie and destinataire and attribut token 
 
 	@Before
 	public void init() {
@@ -60,10 +61,4 @@ public class TransactionServicesTest {
 		
 	}
 	
-	
-	@Test
-	public void testretrieveAllTransactionAsc() {
-		Assert.assertEquals(transaction, transactionServices.retrieveTransaction((int) transaction.getIdTransaction()));
-		
-	}
 }
