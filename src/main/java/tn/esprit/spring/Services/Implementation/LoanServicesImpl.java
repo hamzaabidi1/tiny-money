@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.Services.Interfaces.LoanServices;
 import tn.esprit.spring.entities.Account;
@@ -22,7 +23,7 @@ public class LoanServicesImpl implements LoanServices {
 	@Autowired
 	AccountRepository accountRepository;
 
-	
+	@Scheduled(cron = "0 15 10 15 * ?", zone = "Europe/Paris")
 	public void NotificationLoan() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -2);

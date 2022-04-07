@@ -32,6 +32,23 @@ public class Transaction implements Serializable{
 	private EStatus status;
 	private String tokenValidation;
 	
+	
+	
+	public Transaction(long idTransaction, tn.esprit.spring.entities.TypeTransaction typeTransaction,
+			tn.esprit.spring.entities.TransactionNature transactionNature, Date dateTransaction,
+			float amountTransaction, Account account, Account accountdestinataire, EStatus status,
+			String tokenValidation) {
+		super();
+		this.idTransaction = idTransaction;
+		TypeTransaction = typeTransaction;
+		TransactionNature = transactionNature;
+		DateTransaction = dateTransaction;
+		AmountTransaction = amountTransaction;
+		this.account = account;
+		this.accountdestinataire = accountdestinataire;
+		this.status = status;
+		this.tokenValidation = tokenValidation;
+	}
 	public Transaction(TypeTransaction typeTransaction,
 			TransactionNature transactionNature, Date dateTransaction,
 			float amountTransaction) {

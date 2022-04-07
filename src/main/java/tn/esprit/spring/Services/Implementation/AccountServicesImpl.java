@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Account;
@@ -51,6 +52,7 @@ public class AccountServicesImpl {
 		return accountrep.findById(id).get();
 	}
 
+	@Scheduled(cron = "0 15 10 15 * ?", zone = "Europe/Paris")
 	public void AddFinancialInterest() {
 		LOGGER.info("IN add financial interest of Accounts ");
 		List<Account> accounts = accountrep.findAll();
