@@ -1,12 +1,7 @@
 package tn.esprit.spring.Services.Interfaces;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import tn.esprit.spring.entities.Transaction;
-import tn.esprit.spring.entities.TransactionNature;
-import tn.esprit.spring.entities.TypeTransaction;
 
 
 public interface TransactionServices {
@@ -22,5 +17,6 @@ public interface TransactionServices {
 	List<Transaction> retrieveAllTransactionDesc();
 	List<Transaction> retrieveAllTransactionByType(String type);
 	List<Transaction> retrieveAllTransactionByNature(String nature);
+	Transaction validate(String token, Transaction t);
 	
 }

@@ -5,10 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import tn.esprit.spring.entities.Transaction;
-import tn.esprit.spring.entities.TransactionNature;
-import tn.esprit.spring.entities.TypeTransaction;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction,Integer> {
@@ -21,6 +18,7 @@ public interface TransactionRepository extends JpaRepository<Transaction,Integer
 	List<Transaction> findAllByTypeTransaction(String typeTransaction);
 	@Query("FROM Transaction WHERE TransactionNature=?1")
 	List<Transaction> findAllByTransactionNature(String transactionNature);
+	
 	
 
 

@@ -7,15 +7,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 
@@ -28,6 +25,7 @@ public class Loan implements Serializable {
 	private long idLoan;
 	private String NameLoan;
 	private String TMM;
+	private Long montant;
 	private String DescriptionLoan;
 	@Temporal(TemporalType.DATE)
 	private Date DateTakeLoan;
@@ -44,7 +42,7 @@ public class Loan implements Serializable {
 	private Insurance insurance;
 
 	public Loan(String nameLoan, String tMM, String descriptionLoan, Date dateTakeLoan, Date datePayLoan,
-			tn.esprit.spring.entities.TypeLoan typeLoan) {
+			TypeLoan typeLoan,Long montant) {
 		super();
 		NameLoan = nameLoan;
 		TMM = tMM;
@@ -52,6 +50,7 @@ public class Loan implements Serializable {
 		DateTakeLoan = dateTakeLoan;
 		DatePayLoan = datePayLoan;
 		TypeLoan = typeLoan;
+		this.montant=montant;
 	}
 
 	public Loan() {
@@ -120,6 +119,14 @@ public class Loan implements Serializable {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public Long getMontant() {
+		return montant;
+	}
+
+	public void setMontant(Long montant) {
+		this.montant = montant;
 	}
 
 	

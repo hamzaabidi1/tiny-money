@@ -2,6 +2,7 @@ package tn.esprit.spring.Services.Implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import net.bytebuddy.utility.RandomString;
+import tn.esprit.spring.entities.EStatus;
 import tn.esprit.spring.entities.Transaction;
 import tn.esprit.spring.entities.Repository.AccountRepository;
 import tn.esprit.spring.entities.Repository.TransactionRepository;
@@ -39,15 +43,29 @@ public class TransactionServicesImpl implements TransactionServices {
 
 		LOGGER.info("IN Add transaction ");
 		if (t.getAmountTransaction() > 100) {
+			String token = RandomString.make(30);
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(t.getAccount().getUser().getEmail());
 			message.setSubject("Transaction");
-			message.setText("your transaction amount is" + t.getAmountTransaction());
+			message.setText("your transaction amount is" + t.getAmountTransaction()
+					+ "please enter this code to confirm :" + token);
 			this.emailSender.send(message);
 		}
-		Transaction tr = TransactionRep.save(t);
-		t.getAccount().setTotalAccount(t.getAccount().getTotalAccount() - 3 + t.getAmountTransaction());
-		accountRepository.save(t.getAccount());
+		TransactionRep.save(t);
+		return t;
+	}
+	@Override
+	public Transaction validate(String token, Transaction t) {
+		Transaction tr;
+		if (Objects.equals(token, t.getTokenValidation())) {
+			t.setStatus(EStatus.confirmed);
+			t.getAccount().setTotalAccount(t.getAccount().getTotalAccount() - 3 - t.getAmountTransaction());
+			t.getAccountdestinataire().setTotalAccount(t.getAccountdestinataire().getTotalAccount() + t.getAmountTransaction());
+			 tr = addTransaction(t);
+		} else {
+			t.setStatus(EStatus.denied);
+			tr = addTransaction(t);
+		}
 		return tr;
 	}
 

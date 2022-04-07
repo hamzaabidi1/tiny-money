@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import tn.esprit.spring.entities.Transaction;
-import tn.esprit.spring.entities.TransactionNature;
-import tn.esprit.spring.entities.TypeTransaction;
 import tn.esprit.spring.Services.Interfaces.TransactionServices;
 
 @RestController
@@ -70,6 +67,12 @@ public class TransactionController {
 		List<Transaction>transactions= tsi.retrieveAllTransactionByNature(nature);
 		return transactions;
 	}
+     @PostMapping("validate/{token}" )
+     public void validateTransaction(@PathVariable("token")String token,@RequestBody Transaction t) {
+    	 tsi.validate(token, t);
+     }
+
+	
 	
 	
 	//*********************************************************************//

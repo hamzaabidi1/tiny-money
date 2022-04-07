@@ -1,25 +1,19 @@
 package tn.esprit.spring.entities;
 
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 
 @Entity
-
 public class Transaction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id	
@@ -35,6 +29,8 @@ public class Transaction implements Serializable{
 	@ManyToOne
 	private Account account;
 	private Account accountdestinataire;
+	private EStatus status;
+	private String tokenValidation;
 	
 	public Transaction(TypeTransaction typeTransaction,
 			TransactionNature transactionNature, Date dateTransaction,
@@ -90,6 +86,19 @@ public class Transaction implements Serializable{
 	public void setAccountdestinataire(Account accountdestinataire) {
 		this.accountdestinataire = accountdestinataire;
 	}
+	public EStatus getStatus() {
+		return status;
+	}
+	public void setStatus(EStatus status) {
+		this.status = status;
+	}
+	public String getTokenValidation() {
+		return tokenValidation;
+	}
+	public void setTokenValidation(String tokenValidation) {
+		this.tokenValidation = tokenValidation;
+	}
+	
 	
 	
 	
